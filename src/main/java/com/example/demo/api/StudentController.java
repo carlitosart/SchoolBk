@@ -31,15 +31,20 @@ public class StudentController {
     @Autowired
     private RabbitTemplate template;
 
-    @PostMapping("/tvi")
+    @PostMapping("/stdirec")
     public String sendStudent(@RequestBody StudentDto studentDto){
         template.convertAndSend(RabbitMqConfig.EXCHANGE2,RabbitMqConfig.ROUTING_KEY2,studentDto);
         return "Estudiante Enviado";
     }
-    @PostMapping("/tvo")
+    @PostMapping("/stfanaout")
     public String sendStudent2(@RequestBody StudentDto studentDto){
         template.convertAndSend(RabbitMqConfig.EXCHANGE3,RabbitMqConfig.ROUTING_KEY3,studentDto);
         return "Estudiante Enviado Fanaout";
+    }
+    @PostMapping("/sttopic")
+    public String sendStudent3(@RequestBody StudentDto studentDto){
+        template.convertAndSend(RabbitMqConfig.EXCHANGE4,RabbitMqConfig.ROUTING_KEY4,studentDto);
+        return "Estudiante Enviado Topic";
     }
 
     @Value("${key}")

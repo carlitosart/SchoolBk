@@ -114,5 +114,39 @@ public class RabbitMqConfig {
         return rabbitTemplate3;
     }
 
+    public static final String QUEUE4 = "test_queue4";
+    public static final String EXCHANGE4 = "test_exchange4";
+    public static final String ROUTING_KEY4 = "test_routing_key4";
+
+    @Bean
+    public Queue queue4() {
+        return new Queue(QUEUE4);
+    }
+
+    @Bean
+    public TopicExchange exchange4() {
+        return new TopicExchange(EXCHANGE4);
+    }
+
+    @Bean
+    public Binding binding4(Queue queue4, TopicExchange exchange4) {
+        return BindingBuilder
+                .bind(queue4)
+                .to(exchange4)
+                .with(ROUTING_KEY4);
+    }
+
+    @Bean
+    public MessageConverter messageConverter4() {
+        return new Jackson2JsonMessageConverter();
+    }
+
+    @Bean
+    public AmqpTemplate template4(ConnectionFactory connectionFactory) {
+        RabbitTemplate rabbitTemplate4 = new RabbitTemplate(connectionFactory);
+        rabbitTemplate4.setMessageConverter(messageConverter4());
+        return rabbitTemplate4;
+    }
+
 
 }
