@@ -1,9 +1,27 @@
+POST http://localhost:8080/v1/api/students/tvo
+Content-Type: application/json
+
+{
+  "name": "CarFan",
+  "lastName": "CarFan",
+  "email": "car@gmail.com"
+}
+
+###
+POST http://localhost:8080/v1/api/students/tvi
+Content-Type: application/json
+
+{
+  "name": "Car",
+  "lastName": "Car",
+  "email": "car@gmail.com"
+}
+
+###
 POST http://localhost:8080/v1/api/producer
 Content-Type: application/json
 
 {
-  "message": "PROBANDO CLUSTERING"
+  "message": "Enviando mensaje2"
 }
-
-
 ###

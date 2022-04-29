@@ -1,11 +1,13 @@
 package com.example.demo.api;
 
 import com.example.demo.bl.StudentBl;
+import com.example.demo.config.RabbitMqConfig;
 import com.example.demo.dto.StudentDto;
 import com.example.demo.entity.Student;
 import com.example.demo.repository.StudentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageImpl;
@@ -25,6 +27,20 @@ public class StudentController {
     private static Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
 
     private StudentBl studentBl;
+
+    @Autowired
+    private RabbitTemplate template;
+
+    @PostMapping("/tvi")
+    public String sendStudent(@RequestBody StudentDto studentDto){
+        template.convertAndSend(RabbitMqConfig.EXCHANGE2,RabbitMqConfig.ROUTING_KEY2,studentDto);
+        return "Estudiante Enviado";
+    }
+    @PostMapping("/tvo")
+    public String sendStudent2(@RequestBody StudentDto studentDto){
+        template.convertAndSend(RabbitMqConfig.EXCHANGE3,RabbitMqConfig.ROUTING_KEY3,studentDto);
+        return "Estudiante Enviado Fanaout";
+    }
 
     @Value("${key}")
     String key;
